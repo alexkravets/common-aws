@@ -1,17 +1,17 @@
 {
-  "name": "@kravc/common-aws",
-  "version": "1.2.0",
-  "description": "Helpers to interact and mock AWS services",
-  "main": "index.js",
+  "name": "@kravc/aws",
+  "version": "1.2.1",
+  "description": "Base AWS classes to help mock AWS SDK methods",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/alexkravets/common-aws.git"
+    "url": "http://github.com/alexkravets/aws.git"
   },
   "directories": {
     "src": "src"
   },
   "scripts": {
-    "test": "eslint src/ test/ && NODE_PATH=./ NODE_CONFIG_DIR=./test/config nyc mocha --exit"
+    "test": "eslint src/ test/ && NODE_PATH=./src NODE_CONFIG_DIR=./test/config nyc mocha --exit"
   },
   "author": "Oleksandr Kravets <a@kra.vc>",
   "license": "ISC",
@@ -19,11 +19,11 @@
     "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.675.0",
+    "aws-sdk": "^2.680.0",
     "chai": "^4.2.0",
     "config": "^3.3.1",
-    "mocha": "^7.1.1",
-    "nock": "^12.0.3",
+    "eslint": "^6.8.0",
+    "mocha": "^7.1.2",
     "nyc": "^15.0.1"
   },
   "peerDependencies": {

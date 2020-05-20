@@ -1,3 +1,3 @@
-# Common AWS
+# AWS
 
-Helpers to interact and mock AWS services.
+Base AWS classes to help mock AWS SDK methods.

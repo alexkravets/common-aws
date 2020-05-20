@@ -26,14 +26,14 @@ class AwsService {
     return null
   }
 
-  async _method(methodName, parameters = {}) {
+  async _method(methodName, ...args) {
     if (global.mockService) {
-      const result = global.mockService.request(methodName, parameters)
+      const result = global.mockService.request(methodName, args)
       return result
     }
 
     const promise = new Promise((resolve, reject) =>
-      this._provider[methodName](parameters, (error, result) => {
+      this._provider[methodName](...args, (error, result) => {
         if (error) { return reject(error) }
         return resolve(result)
       }))

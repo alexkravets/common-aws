@@ -7,8 +7,8 @@ class MockService {
     this._operationsStack = []
   }
 
-  mock(operationId, parameters, result) {
-    const mock = { operationId, parameters, result }
+  mock(operationId, args, result) {
+    const mock = { operationId, args, result }
     this._operationsStack.push(mock)
   }
 
@@ -23,8 +23,8 @@ class MockService {
     this._operationsStack.splice(index, 1)
 
     if (operation.result.error) {
-      const { parameters, result: { error } } = operation
-      throw new InternalRequestError({ operationId, parameters }, error)
+      const { args, result: { error } } = operation
+      throw new InternalRequestError({ operationId, args }, error)
     }
 
     return operation.result
