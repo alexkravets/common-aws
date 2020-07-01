@@ -5,8 +5,8 @@ const config  = require('config')
 const options = {}
 
 if (process.env.NODE_ENV !== 'lambda') {
-  const profile  = config.get('provider.profile')
-  options.region = config.get('provider.region')
+  const profile  = config.get('aws.profile')
+  options.region = config.get('aws.region')
   options.credentials = new AWS.SharedIniFileCredentials({ profile })
 }
 
@@ -32,7 +32,7 @@ class AwsService {
       return result
     }
 
-    const promise = new Promise((resolve, reject) =>
+    const promise = new global.Promise((resolve, reject) =>
       this._provider[methodName](...args, (error, result) => {
         if (error) { return reject(error) }
         return resolve(result)

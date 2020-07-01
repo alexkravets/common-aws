@@ -1,7 +1,6 @@
 'use strict'
 
 const config               = require('config')
-const cloneDeep            = require('lodash.clonedeep')
 const AwsService           = require('./AwsService.js')
 const InternalRequestError = require('./errors/InternalRequestError')
 
@@ -14,6 +13,13 @@ class LambdaService extends AwsService {
 
   get service() {
     return 'Lambda'
+  }
+
+  async executeAsync(parameters) {
+    const InvokeArgs   = JSON.stringify(parameters, null, 2)
+    const FunctionName = this._functionName
+
+    await this._method('invokeAsync', { FunctionName, InvokeArgs })
   }
 
   async execute(operationId, parameters = {}) {
@@ -41,7 +47,7 @@ class LambdaService extends AwsService {
   }
 
   _createPayload(operationId, parameters) {
-    parameters = cloneDeep(parameters)
+    parameters = JSON.parse(JSON.stringify(parameters))
 
     const { mutation } = parameters
     delete parameters.mutation
@@ -69,33 +75,6 @@ class LambdaService extends AwsService {
 
     throw new InternalRequestError({ operationId, parameters }, error)
   }
-
-  // TODO: Parameters verification should by taking service specification into
-  //       consideration.
-  // async executeAsync(operationId, parameters = {}) {
-  //   if (global.mockService) {
-  //     parameters.functionName = this.FunctionName
-  //     return global.mockService.request(operationId, parameters)
-  //   }
-
-  //   const { mutation } = parameters
-  //   delete parameters.mutation
-
-  //   const queryStringParameters = parameters
-  //   const req = { operationId, queryStringParameters }
-
-  //   if (mutation) {
-  //     req.body = JSON.stringify(mutation)
-  //   }
-
-  //   const InvokeArgs = JSON.stringify(req)
-  //   const { FunctionName } = this
-
-  //   await this._method('invokeAsync', {
-  //     FunctionName,
-  //     InvokeArgs
-  //   })
-  // }
 }
 
 module.exports = LambdaService
