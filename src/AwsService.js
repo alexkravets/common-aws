@@ -1,10 +1,11 @@
 'use strict'
 
-const AWS     = require('aws-sdk')
-const config  = require('config')
+const AWS    = require('aws-sdk')
+const config = require('config')
+
 const options = {}
 
-if (process.env.NODE_ENV !== 'lambda') {
+if (process.env.NODE_ENV !== 'serverless') {
   const profile  = config.get('aws.profile')
   options.region = config.get('aws.region')
   options.credentials = new AWS.SharedIniFileCredentials({ profile })
