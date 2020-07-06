@@ -1,6 +1,6 @@
 {
   "name": "@kravc/aws",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Base AWS classes to help mock AWS SDK methods",
   "main": "src/index.js",
   "repository": {
@@ -26,5 +26,8 @@
   "peerDependencies": {
     "aws-sdk": "^2.700.0",
     "config": "^3.3.1"
+  },
+  "dependencies": {
+    "lodash.get": "^4.4.2"
   }
 }

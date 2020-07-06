@@ -1,13 +1,14 @@
 'use strict'
 
+const get    = require('lodash.get')
 const AWS    = require('aws-sdk')
 const config = require('config')
 
 const options = {}
 
 if (process.env.NODE_ENV !== 'serverless') {
-  const profile  = config.get('aws.profile')
-  options.region = config.get('aws.region')
+  const profile  = get(config, 'aws.profile', 'private')
+  options.region = get(config, 'aws.region', 'local')
   options.credentials = new AWS.SharedIniFileCredentials({ profile })
 }
 
