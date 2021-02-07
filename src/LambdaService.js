@@ -22,12 +22,12 @@ class LambdaService extends AwsService {
     await this._method('invokeAsync', { FunctionName, InvokeArgs })
   }
 
-  async execute(operationId, parameters = {}) {
+  async execute(operationId, parameters = {}, headers = {}) {
     if (global.mockService) {
       return global.mockService.request(operationId, parameters)
     }
 
-    const Payload      = this._createPayload(operationId, parameters)
+    const Payload      = this._createPayload(operationId, parameters, headers)
     const FunctionName = this._functionName
 
     const {
@@ -46,14 +46,14 @@ class LambdaService extends AwsService {
     return this._processResponse(operationId, parameters, responseJson)
   }
 
-  _createPayload(operationId, parameters) {
+  _createPayload(operationId, parameters, headers) {
     parameters = JSON.parse(JSON.stringify(parameters))
 
     const { mutation } = parameters
     delete parameters.mutation
 
     const queryStringParameters = parameters
-    const req = { operationId, queryStringParameters }
+    const req = { operationId, queryStringParameters, headers }
 
     if (mutation) {
       req.body = JSON.stringify(mutation, null, 2)
