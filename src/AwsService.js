@@ -30,7 +30,7 @@ class AwsService {
 
   async _method(methodName, ...args) {
     if (global.mockService) {
-      const result = global.mockService.request(methodName, args)
+      const result = global.mockService.request(methodName, ...args)
       return result
     }
 

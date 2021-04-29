@@ -7,12 +7,12 @@ class MockService {
     this._operationsStack = []
   }
 
-  mock(operationId, args, result) {
-    const mock = { operationId, args, result }
+  mock(operationId, handler = args => args, result = {}) {
+    const mock = { operationId, handler, result }
     this._operationsStack.push(mock)
   }
 
-  request(operationId) {
+  request(operationId, ...args) {
     const index     = this._operationsStack.findIndex(operation => operation.operationId === operationId)
     const operation = this._operationsStack[index]
 
@@ -22,8 +22,12 @@ class MockService {
 
     this._operationsStack.splice(index, 1)
 
+    const { handler } = operation
+
+    handler(...args)
+
     if (operation.result.error) {
-      const { args, result: { error } } = operation
+      const { result: { error } } = operation
       throw new InternalRequestError({ operationId, args }, error)
     }
 
