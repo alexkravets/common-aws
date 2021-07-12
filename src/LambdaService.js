@@ -15,8 +15,21 @@ class LambdaService extends AwsService {
     return 'Lambda'
   }
 
-  async executeAsync(parameters) {
-    const InvokeArgs   = JSON.stringify(parameters, null, 2)
+  async executeAsync(operationId, parameters = {}, headers = {}) {
+    if (global.mockService) {
+      return global.mockService.request(operationId, parameters)
+    }
+
+    const { mutation: body, ...queryStringParameters } = parameters
+
+    const request = {
+      body,
+      headers,
+      operationId,
+      queryStringParameters
+    }
+
+    const InvokeArgs   = JSON.stringify(request, null, 2)
     const FunctionName = this._functionName
 
     await this._method('invokeAsync', { FunctionName, InvokeArgs })
