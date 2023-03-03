@@ -2,6 +2,7 @@
 
 const config               = require('config')
 const AwsService           = require('./AwsService.js')
+const { LambdaClient }     = require('@aws-sdk/client-lambda')
 const InternalRequestError = require('./errors/InternalRequestError')
 
 class LambdaService extends AwsService {
@@ -12,7 +13,7 @@ class LambdaService extends AwsService {
   }
 
   get service() {
-    return 'Lambda'
+    return LambdaClient
   }
 
   async executeAsync(operationId, parameters = {}, headers = {}) {
