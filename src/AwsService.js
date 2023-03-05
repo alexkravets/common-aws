@@ -1,15 +1,15 @@
 'use strict'
 
-const get    = require('lodash.get')
-const AWS    = require('aws-sdk')
-const config = require('config')
+const get       = require('lodash.get')
+const {fromIni} = require('@aws-sdk/credential-providers')
+const config    = require('config')
 
 const options = {}
 
 if (process.env.NODE_ENV !== 'serverless') {
-  const profile  = get(config, 'aws.profile', 'private')
-  options.region = get(config, 'aws.region', 'local')
-  options.credentials = new AWS.SharedIniFileCredentials({ profile })
+  const profile       = get(config, 'aws.profile', 'private')
+  options.region      = get(config, 'aws.region', 'local')
+  options.credentials = fromIni({ profile })
 }
 
 class AwsService {
@@ -18,7 +18,7 @@ class AwsService {
       throw new Error('AWS service is not defined')
     }
 
-    this._provider = new AWS[this.service]({
+    this._provider = new this.service({
       ...options,
       ..._options
     })
