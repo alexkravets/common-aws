@@ -1,6 +1,6 @@
 {
   "name": "@kravc/aws",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "Base AWS classes to help mock AWS SDK methods",
   "main": "src/index.js",
   "repository": {
@@ -16,11 +16,9 @@
   "author": "Oleksandr Kravets <a@kra.vc>",
   "license": "ISC",
   "devDependencies": {
-    "@aws-sdk/client-lambda": "^3.282.0",
-    "@aws-sdk/credential-providers": "^3.282.0",
-    "chai": "^4.2.0",
+    "chai": "^4.3.4",
     "config": "^3.3.1",
-    "eslint": "^7.3.1",
+    "eslint": "^7.25.0",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0"
   },
@@ -28,6 +26,8 @@
     "config": "^3.3.1"
   },
   "dependencies": {
+    "@aws-sdk/client-lambda": "^3.282.0",
+    "@aws-sdk/credential-providers": "^3.282.0",
     "lodash.get": "^4.4.2"
   }
 }

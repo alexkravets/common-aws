@@ -1,8 +1,8 @@
 'use strict'
 
-const get       = require('lodash.get')
-const {fromIni} = require('@aws-sdk/credential-providers')
-const config    = require('config')
+const get         = require('lodash.get')
+const config      = require('config')
+const { fromIni } = require('@aws-sdk/credential-providers')
 
 const options = {}
 
