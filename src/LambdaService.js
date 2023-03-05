@@ -1,8 +1,8 @@
 'use strict'
 
-const config               = require('config')
-const AwsService           = require('./AwsService.js')
-const { LambdaClient }     = require('@aws-sdk/client-lambda')
+const config     = require('config')
+const AwsService = require('./AwsService.js')
+const { Lambda } = require('@aws-sdk/client-lambda')
 const InternalRequestError = require('./errors/InternalRequestError')
 
 class LambdaService extends AwsService {
@@ -13,7 +13,7 @@ class LambdaService extends AwsService {
   }
 
   get service() {
-    return LambdaClient
+    return Lambda
   }
 
   async executeAsync(operationId, parameters = {}, headers = {}) {
@@ -45,10 +45,12 @@ class LambdaService extends AwsService {
     const FunctionName = this._functionName
 
     const {
-      Payload:    responseJson,
+      Payload:    payloadByteArray,
       StatusCode: statusCode,
       ...rest
     } = await this._method('invoke', { FunctionName, Payload })
+
+    const responseJson = Buffer.from(payloadByteArray).toString()
 
     const isSuccess = statusCode === 200
 
