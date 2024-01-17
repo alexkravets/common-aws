@@ -1,10 +1,9 @@
 'use strict'
 
-const LambdaService = require('../LambdaService')
-
+const getService = require('./getService')
 
 const execute = async (serviceName, operationId, parameters = {}) => {
-  const service = new LambdaService(serviceName)
+  const service = getService(serviceName)
   const result = await service.executeAsync(operationId, parameters)
 
   return result

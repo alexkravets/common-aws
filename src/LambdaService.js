@@ -9,7 +9,10 @@ class LambdaService extends AwsService {
   constructor(serviceName, options) {
     super(options)
 
-    this._functionName = config.get(`services.${serviceName}`)
+    const stage = process.env.NODE_APP_INSTANCE
+    const functionName = config.get(`services.${serviceName}`)
+
+    this._functionName = `${functionName}-${stage}-api`
   }
 
   get service() {
