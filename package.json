@@ -1,6 +1,6 @@
 {
   "name": "@kravc/aws",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Base AWS classes to help mock AWS SDK methods",
   "main": "src/index.js",
   "repository": {

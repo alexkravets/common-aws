@@ -28,10 +28,14 @@ class AwsService {
     return null
   }
 
+  parseMockResult(result) {
+    return result
+  }
+
   async _method(methodName, ...args) {
     if (global.mockService) {
       const result = global.mockService.request(methodName, ...args)
-      return result
+      return this.parseMockResult(result)
     }
 
     const promise = new global.Promise((resolve, reject) =>
